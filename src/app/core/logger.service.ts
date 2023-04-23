@@ -9,4 +9,8 @@ export class LoggerService {
   constructor(@Inject(API_URL) private _apiUrl: string) {
     console.log(this._apiUrl);
   }
+
+  sayHello(): string {
+    return 'Hallo von LoggerService';
+  }
 }
