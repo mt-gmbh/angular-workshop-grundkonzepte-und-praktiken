@@ -6,6 +6,7 @@ import { UserModule } from "./user/user.module";
 import { CoreModule } from "./core/core.module";
 import { API_URL } from "./core/api-url";
 import { Config, CONFIG } from "./core/config";
+import { ConfigModule } from "./config/config.module";
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { Config, CONFIG } from "./core/config";
   imports: [
     BrowserModule,
     CoreModule,
-    UserModule
+    UserModule,
+    ConfigModule.loadConfig('https://jsonplaceholder.typicode.com/users/1')
   ],
   providers: [
     {provide: CONFIG, useValue: {isProd: true}},
