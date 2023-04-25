@@ -6,9 +6,10 @@ import { UserModule } from "./user/user.module";
 import { CoreModule } from "./core/core.module";
 import { API_URL } from "./core/api-url";
 import { Config, CONFIG } from "./core/config";
-import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from "@angular/common/http";
 import { delay, tap } from "rxjs";
 import { ConfigService } from "./core/config.service";
+import { AddAccessTokenInterceptor } from "./core/add-access-token.interceptor";
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ConfigService } from "./core/config.service";
     UserModule
   ],
   providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AddAccessTokenInterceptor, multi: true},
     {provide: CONFIG, useValue: {isProd: true}},
     {
       provide: API_URL, useFactory: (config: Config) => {
