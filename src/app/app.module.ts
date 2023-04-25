@@ -10,6 +10,7 @@ import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from "@angular/common
 import { delay, tap } from "rxjs";
 import { ConfigService } from "./core/config.service";
 import { AddAccessTokenInterceptor } from "./core/add-access-token.interceptor";
+import { SharedModule } from "./shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { AddAccessTokenInterceptor } from "./core/add-access-token.interceptor";
     BrowserModule,
     HttpClientModule,
     CoreModule,
-    UserModule
+    UserModule,
+    SharedModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AddAccessTokenInterceptor, multi: true},
