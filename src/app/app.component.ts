@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { LoggerService } from "./core/logger.service";
+import { ConfigService } from "./core/config.service";
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,7 @@ import { LoggerService } from "./core/logger.service";
 })
 export class AppComponent {
 
-  constructor(private _logger: LoggerService) {
+  constructor(private _logger: LoggerService,
+              protected _configService: ConfigService) {
   }
 }
