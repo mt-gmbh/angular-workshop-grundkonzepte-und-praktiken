@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -6,6 +6,9 @@ import { UserModule } from "./user/user.module";
 import { CoreModule } from "./core/core.module";
 import { API_URL } from "./core/api-url";
 import { Config, CONFIG } from "./core/config";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { delay, tap } from "rxjs";
+import { ConfigService } from "./core/config.service";
 
 @NgModule({
   declarations: [
@@ -13,6 +16,7 @@ import { Config, CONFIG } from "./core/config";
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     CoreModule,
     UserModule
   ],
@@ -27,7 +31,19 @@ import { Config, CONFIG } from "./core/config";
         return 'https://localhost:4200'
       },
       deps: [CONFIG]
-    }
+    },
+    {
+      provide: APP_INITIALIZER, useFactory: (httpClient: HttpClient, configService: ConfigService) => {
+
+        return () => httpClient.get('https://jsonplaceholder.typicode.com/users/1').pipe(
+          delay(2000),
+          tap(config => configService.config = config),
+        )
+
+      },
+      deps: [HttpClient, ConfigService],
+      multi: true
+    },
   ],
   bootstrap: [AppComponent]
 })
